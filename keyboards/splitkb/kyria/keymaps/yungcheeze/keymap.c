@@ -17,19 +17,40 @@
 
 enum layers {
     _QWERTY = 0,
+    _SYM
 };
 
 
+// Custom keys
+enum custom_keycodes {
+  WIN_TMUX = SAFE_RANGE,
+  EMACS_CG,
+};
+
 // Aliases for readability
 #define QWERTY   DF(_QWERTY)
+#define SYM TG(_SYM)
 
 #define CTL_ESC  MT(MOD_LCTL, KC_ESC)
 #define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
 #define CTL_MINS MT(MOD_RCTL, KC_MINUS)
 #define ALT_ENT  MT(MOD_LALT, KC_ENT)
 #define LSFT_SPC LSFT_T(KC_SPC)
-#define CTL_ENT MT(MOD_RCTL, KC_ENT)
-#define CTL_TAB MT(MOD_LCTL, KC_TAB)
+#define LSFT_ENT MT(MOD_LSFT, KC_ENT)
+#define LSFT_TAB MT(MOD_LSFT, KC_TAB)
+#define LSFT_CAP MT(MOD_LSFT, KC_CAPS)
+#define SYM_ALT LT(_SYM, KC_LALT)
+#define SYM_L LT(_SYM, KC_L)
+#define SYM_S LT(_SYM, KC_S)
+#define WIN_TMUX MT(MOD_LGUI, LALT(KC_SEMICOLON))
+#define TMUX LALT(KC_SEMICOLON)
+#define EMACS LALT(KC_SPACE)
+#define MA_D LALT_T(KC_D)
+#define MC_F LCTL_T(KC_F)
+#define MC_J LCTL_T(KC_J)
+#define MA_K LALT_T(KC_K)
+#define SC_A LSFT_T(KC_A)
+#define SC_SCLN LSFT_T(KC_SCLN)
 // Note: LAlt/Enter (ALT_ENT) is not the same thing as the keyboard shortcut Alt+Enter.
 // The notation `mod/tap` denotes a key that activates the modifier `mod` when held down, and
 // produces the key `tap` when tapped (i.e. pressed and released).
@@ -51,11 +72,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
-     _______  , KC_Q ,  KC_W   ,  KC_E  ,   KC_R ,   KC_T ,                                         KC_Y,   KC_U ,  KC_I ,   KC_O ,  KC_P , KC_BSPC,
-     KC_GRV  , KC_A ,  KC_S   ,  KC_D  ,   KC_F ,   KC_G ,                                         KC_H,   KC_J ,  KC_K ,   KC_L ,KC_SCLN, KC_QUOT,
-     KC_ESC  , KC_Z ,  KC_X   ,  KC_C  ,   KC_V ,   KC_B , _______,_______,     _______, _______,  KC_N,   KC_M ,KC_COMM, KC_DOT ,KC_SLSH, _______,
-                                _______, KC_LWIN,LSFT_SPC, CTL_TAB,KC_LALT,     KC_LALT, CTL_ENT,LSFT_SPC, KC_LWIN, _______
+     _______ , KC_Q ,  KC_W   ,  KC_E  ,   KC_R ,   KC_T ,                                         KC_Y   ,  KC_U ,  KC_I ,   KC_O ,  KC_P , KC_BSPC,
+     KC_TAB  , SC_A ,  SYM_S  ,  MA_D  ,   MC_F ,EMACS_CG,                                         KC_H   ,  MC_J ,  MA_K ,   SYM_L,SC_SCLN, KC_QUOT,
+     KC_ESC  , KC_Z ,  KC_X   ,  KC_C  ,   KC_V ,   KC_B , _______,_______,     _______, _______,  KC_N   ,  KC_M ,KC_COMM, KC_DOT ,KC_SLSH, KC_GRV,
+                                _______,KC_LWIN ,LSFT_CAP,KC_SPC  , TMUX  ,     TMUX   ,KC_SPC  ,LSFT_ENT ,KC_LWIN, _______
     ),
+ /*
+  * Layer template
+  *
+  * ,-------------------------------------------.                              ,-------------------------------------------.
+  * |   `    |   1  |   2  |  3   |      |      |                              |      |      |      |      |      |        |
+  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+  * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
+  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+  * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
+  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+  *                        |      |      |      |      |      |  |      |      |      |      |      |
+  *                        |      |      |      |      |      |  |      |      |      |      |      |
+  *                        `----------------------------------'  `----------------------------------'
+  */
+     [_SYM] = LAYOUT(
+       _______,   KC_1       ,   KC_2         ,   KC_3         ,   KC_4         ,   KC_5 ,                                     KC_6   ,   KC_7         ,   KC_8       ,   KC_9           ,   KC_0         , KC_EQL  ,   
+       KC_AT  , KC_LT, KC_GT, KC_LPRN, KC_RPRN, _______,                                     KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_PIPE, KC_MINUS,
+       KC_HASH, KC_LCBR      , KC_RCBR        , KC_LBRC        , KC_RBRC        , _______, _______, _______, _______, _______, _______, _______        , KC_CIRC      , _______          , _______        , KC_UNDS,
+                                              _______          , _______        , _______, _______, _______, _______, _______, _______, _______        , _______
+     ),
 
 // /*
 //  * Layer template
@@ -78,6 +119,42 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 //     ),
 };
+
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  static uint16_t my_hash_timer;
+  switch (keycode) {
+    case WIN_TMUX:
+      if(record->event.pressed) {
+        my_hash_timer = timer_read();
+        register_code(KC_LWIN); // Change the key to be held here
+      } else {
+        unregister_code(KC_LWIN); // Change the key that was held here, too!
+        if (timer_elapsed(my_hash_timer) < TAPPING_TERM) {
+	  register_code(KC_LALT);
+          SEND_STRING(";"); // Change the character(s) to be sent on tap here
+	  unregister_code(KC_LALT);
+        }
+      }
+      return false; // We handled this keypress
+    case EMACS_CG:
+      if(record->event.pressed) {
+        my_hash_timer = timer_read();
+      } else {
+        if (timer_elapsed(my_hash_timer) < TAPPING_TERM) {
+	  SEND_STRING("g"); 
+        } else {
+	  register_code(KC_LCTL);
+          SEND_STRING("g"); 
+	  unregister_code(KC_LCTL);
+	}
+      }
+      return false;
+	
+  }
+  return true; // We didn't handle other keypresses
+}
+
 
 /* The default OLED and rotary encoder code can be found at the bottom of qmk_firmware/keyboards/splitkb/kyria/rev1/rev1.c
  * These default settings can be overriden by your own settings in your keymap.c
@@ -106,6 +183,9 @@ bool oled_task_user(void) {
         switch (get_highest_layer(layer_state|default_layer_state)) {
             case _QWERTY:
                 oled_write_P(PSTR("QWERTY\n"), false);
+                break;
+            case _SYM:
+                oled_write_P(PSTR("SYM\n"), false);
                 break;
             default:
                 oled_write_P(PSTR("Undefined\n"), false);
