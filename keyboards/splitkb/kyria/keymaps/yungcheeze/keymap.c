@@ -25,6 +25,8 @@ enum layers {
 enum custom_keycodes {
   WIN_TMUX = SAFE_RANGE,
   EMACS_CG,
+  ALT_LPRN,
+  CTL_RPRN,
 };
 
 // Aliases for readability
@@ -51,6 +53,8 @@ enum custom_keycodes {
 #define MA_K LALT_T(KC_K)
 #define SC_A LSFT_T(KC_A)
 #define SC_SCLN LSFT_T(KC_SCLN)
+#define CTL_DOWN LCTL_T(KC_DOWN)
+#define ALT_UP LALT_T(KC_UP)
 // Note: LAlt/Enter (ALT_ENT) is not the same thing as the keyboard shortcut Alt+Enter.
 // The notation `mod/tap` denotes a key that activates the modifier `mod` when held down, and
 // produces the key `tap` when tapped (i.e. pressed and released).
@@ -93,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   */
      [_SYM] = LAYOUT(
        _______,   KC_1       ,   KC_2         ,   KC_3         ,   KC_4         ,   KC_5 ,                                     KC_6   ,   KC_7         ,   KC_8       ,   KC_9           ,   KC_0         , KC_EQL  ,   
-       KC_AT  , KC_LT, KC_GT, KC_LPRN, KC_RPRN, _______,                                     KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_PIPE, KC_MINUS,
+       KC_AT  , KC_LT, KC_GT, ALT_LPRN, CTL_RPRN, _______,                                     KC_LEFT, CTL_DOWN, ALT_UP, KC_RGHT, KC_PIPE, KC_MINUS,
        KC_HASH, KC_LCBR      , KC_RCBR        , KC_LBRC        , KC_RBRC        , _______, _______, _______, _______, _______, _______, _______        , KC_CIRC      , _______          , _______        , KC_UNDS,
                                               _______          , _______        , _______, _______, _______, _______, _______, _______, _______        , _______
      ),
@@ -150,7 +154,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	}
       }
       return false;
-	
+    case ALT_LPRN:
+      if(record->event.pressed) {
+        my_hash_timer = timer_read();
+        register_code(KC_LALT); // Change the key to be held here
+      } else {
+        unregister_code(KC_LALT); // Change the key that was held here, too!
+        if (timer_elapsed(my_hash_timer) < TAPPING_TERM) {
+          SEND_STRING("("); // Change the character(s) to be sent on tap here
+        }
+      }
+      return false;     
+    case CTL_RPRN:
+      if(record->event.pressed) {
+        my_hash_timer = timer_read();
+        register_code(KC_LCTL); // Change the key to be held here
+      } else {
+        unregister_code(KC_LCTL); // Change the key that was held here, too!
+        if (timer_elapsed(my_hash_timer) < TAPPING_TERM) {
+          SEND_STRING(")"); // Change the character(s) to be sent on tap here
+        }
+      }
+      return false;     
   }
   return true; // We didn't handle other keypresses
 }
