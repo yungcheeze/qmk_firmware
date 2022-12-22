@@ -48,6 +48,8 @@ enum custom_keycodes {
 #define LSFT_O MT(MOD_LSFT, KC_O)
 #define NUM_CAPS LT(_NUM, KC_CAPS)
 #define NUM_ENT LT(_NUM, KC_ENT)
+#define NUM_SPC LT(_NUM, KC_SPC)
+#define NUM_TAB LT(_NUM, KC_TAB)
 #define NAV_G LT(_NAV, KC_G)
 #define NAV_V LT(_NAV, KC_V)
 #define NAV_B LT(_NAV, KC_B)
@@ -70,6 +72,8 @@ enum custom_keycodes {
 #define CTL_DOWN LCTL_T(KC_DOWN)
 #define ALT_UP LALT_T(KC_UP)
 #define WIN_CAPS MT(MOD_LGUI, KC_CAPS)
+#define WIN_ENT MT(MOD_LGUI, KC_ENT)
+#define WIN_TAB MT(MOD_LGUI, KC_TAB)
 // Note: LAlt/Enter (ALT_ENT) is not the same thing as the keyboard shortcut Alt+Enter.
 // The notation `mod/tap` denotes a key that activates the modifier `mod` when held down, and
 // produces the key `tap` when tapped (i.e. pressed and released).
@@ -94,14 +98,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      _______ , KC_Q ,  KC_W   ,  KC_E  ,   KC_R ,   KC_T ,                                         KC_Y   ,  KC_U  ,  KC_I ,   KC_O ,  KC_P , KC_BSPC,
      KC_TAB  , KC_A ,  LSFT_S ,  MA_D  ,   MC_F , NAV_G  ,                                         KC_H   ,  MC_J  ,  MA_K ,  LSFT_L,KC_SCLN, KC_QUOT,
      KC_ESC  , KC_Z ,  KC_X   ,  KC_C  ,   KC_V ,  KC_B  , KC_ESC ,WORKMAN,     _______, _______,  KC_N   ,  KC_M  ,KC_COMM, KC_DOT ,KC_SLSH, KC_GRV,
-                                _______,WIN_CAPS,NUM_ENT ,KC_SPC  , TMUX  ,     TMUX   ,KC_SPC  , NUM_ENT ,WIN_CAPS, _______
+                                KC_CAPS,KC_LGUI ,NUM_ENT ,NUM_SPC  , TMUX  ,     TMUX   ,NUM_SPC , NUM_ENT ,KC_LGUI , KC_CAPS
     ),
 
     [_WORKMAN] = LAYOUT(
      _______ , KC_Q ,  KC_D   ,  KC_R  ,   KC_W ,   KC_B ,                                         KC_J   ,  KC_F  ,  KC_U ,   KC_P ,KC_SCLN, KC_BSPC,
      KC_TAB  , KC_A ,  KC_S   ,  KC_H  ,   KC_T , NAV_G  ,                                         KC_Y   ,  KC_N  ,  KC_E ,  KC_O,KC_I   , KC_QUOT,
      KC_ESC  , KC_Z ,  KC_X   ,  KC_M  ,   KC_C ,  KC_V  , KC_ESC ,QWERTY ,     _______, _______,  KC_K   ,  KC_L  ,KC_COMM, KC_DOT ,KC_SLSH, KC_GRV,
-                                _______,WIN_CAPS,NUM_ENT ,KC_SPC  , TMUX  ,     TMUX   ,KC_SPC  , NUM_ENT ,WIN_CAPS, _______
+                                KC_CAPS,KC_LGUI ,NUM_ENT ,NUM_SPC  , TMUX  ,     TMUX   ,NUM_SPC , NUM_ENT ,KC_LGUI , KC_CAPS
     ),
 
  /*
@@ -122,7 +126,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        _______, _______, _______, _______, _______, _______,                                     _______, KC_PGDN, KC_PGUP, _______, _______, _______,
        _______, _______, _______, _______, _______, _______,                                     KC_LEFT, CTL_DOWN, ALT_UP, KC_RGHT, _______, _______,
        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_END, KC_HOME, _______, _______, _______,
-                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+                                  _______, _______, _______, _______, _______, _______, _______, KC_TAB, _______, _______
      ),
 
 
@@ -142,8 +146,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   */
      [_NUM] = LAYOUT(
        _______, KC_HASH, KC_1   , KC_2   , KC_3   ,KC_0    ,                                     KC_PIPE, KC_LCBR, KC_RCBR, KC_CIRC, KC_HASH, _______,
-       KC_ASTR, KC_SLSH, SC_4   , MA_5   , MC_6   ,KC_EQL  ,                                    KC_MINUS,ALT_LPRN,CTL_RPRN,LSFT_LT , KC_GT  , KC_AT  ,
-       KC_PLUS,KC_MINUS, KC_7   , KC_8   , KC_9   ,KC_DOT  , _______, _______, _______, _______, KC_UNDS, KC_LBRC, KC_RBRC, _______, _______, KC_BSLS,
+       KC_PLUS,KC_MINUS, SC_4   , MA_5   , MC_6   ,KC_EQL  ,                                    KC_MINUS,ALT_LPRN,CTL_RPRN,LSFT_LT , KC_GT  , KC_AT  ,
+       KC_ASTR, KC_SLSH, KC_7   , KC_8   , KC_9   ,KC_0    , _______, _______, _______, _______, KC_UNDS, KC_LBRC, KC_RBRC, _______, _______, KC_BSLS,
                                   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
      ),
 
