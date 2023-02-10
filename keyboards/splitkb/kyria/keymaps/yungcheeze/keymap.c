@@ -25,8 +25,8 @@ enum layers {
 
 // Custom keys
 enum custom_keycodes {
-  ALT_LPRN = SAFE_RANGE,
-  CTL_RPRN,
+  CTL_LPRN = SAFE_RANGE,
+  ALT_RPRN,
   LSFT_LT,
 };
 
@@ -146,7 +146,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   */
      [_NUM] = LAYOUT(
        _______, KC_HASH, KC_1   , KC_2   , KC_3   ,KC_0    ,                                     KC_PIPE, KC_LCBR, KC_RCBR, KC_CIRC, KC_HASH, _______,
-       KC_PLUS,KC_MINUS, SC_4   , MA_5   , MC_6   ,KC_EQL  ,                                    KC_MINUS,ALT_LPRN,CTL_RPRN,LSFT_LT , KC_GT  , KC_AT  ,
+       KC_PLUS,KC_MINUS, SC_4   , MA_5   , MC_6   ,KC_EQL  ,                                    KC_MINUS,CTL_LPRN,ALT_RPRN,LSFT_LT , KC_GT  , KC_AT  ,
        KC_ASTR, KC_SLSH, KC_7   , KC_8   , KC_9   ,KC_0    , _______, _______, _______, _______, KC_UNDS, KC_LBRC, KC_RBRC, _______, _______, KC_BSLS,
                                   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
      ),
@@ -178,23 +178,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   static uint16_t my_hash_timer;
   switch (keycode) {
-    case ALT_LPRN:
-      if(record->event.pressed) {
-        my_hash_timer = timer_read();
-        register_code(KC_LALT); // Change the key to be held here
-      } else {
-        unregister_code(KC_LALT); // Change the key that was held here, too!
-        if (timer_elapsed(my_hash_timer) < TAPPING_TERM) {
-          SEND_STRING("("); // Change the character(s) to be sent on tap here
-        }
-      }
-      return false;
-    case CTL_RPRN:
+    case CTL_LPRN:
       if(record->event.pressed) {
         my_hash_timer = timer_read();
         register_code(KC_LCTL); // Change the key to be held here
       } else {
         unregister_code(KC_LCTL); // Change the key that was held here, too!
+        if (timer_elapsed(my_hash_timer) < TAPPING_TERM) {
+          SEND_STRING("("); // Change the character(s) to be sent on tap here
+        }
+      }
+      return false;
+    case ALT_RPRN:
+      if(record->event.pressed) {
+        my_hash_timer = timer_read();
+        register_code(KC_LALT); // Change the key to be held here
+      } else {
+        unregister_code(KC_LALT); // Change the key that was held here, too!
         if (timer_elapsed(my_hash_timer) < TAPPING_TERM) {
           SEND_STRING(")"); // Change the character(s) to be sent on tap here
         }
