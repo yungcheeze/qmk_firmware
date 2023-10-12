@@ -30,6 +30,7 @@ enum layers {
 #define ALT_RPRN MT(MOD_LALT, KC_RPRN)
 #define CTL_LPRN MT(MOD_LCTL, KC_LPRN)
 #define LSFT_LT MT(MOD_LSFT, KC_LT)
+#define LSFT_RGHT MT(MOD_LSFT, KC_RGHT)
 #define CTL_ESC  MT(MOD_LCTL, KC_ESC)
 #define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
 #define CTL_MINS MT(MOD_RCTL, KC_MINUS)
@@ -119,7 +120,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   */
      [_NAV] = LAYOUT(
        _______, _______, _______, _______, _______, _______,                                     _______, KC_PGDN, KC_PGUP, _______, _______, _______,
-       _______, _______, _______, _______, _______, _______,                                     KC_LEFT, CTL_DOWN, ALT_UP, KC_RGHT, _______, _______,
+       _______, _______, _______, _______, _______, _______,                                     KC_LEFT, CTL_DOWN, ALT_UP, LSFT_RGHT, _______, _______,
        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_END, KC_HOME, _______, _______, _______,
                                   _______, _______, _______, _______, _______, _______, _______, KC_TAB, _______, _______
      ),
