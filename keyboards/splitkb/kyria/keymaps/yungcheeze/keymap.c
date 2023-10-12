@@ -22,19 +22,14 @@ enum layers {
     _NUM,
 };
 
-
-// Custom keys
-enum custom_keycodes {
-  CTL_LPRN = SAFE_RANGE,
-  ALT_RPRN,
-  LSFT_LT,
-};
-
 // Aliases for readability
 #define QWERTY   DF(_QWERTY)
 #define WORKMAN   DF(_WORKMAN)
 #define NUM MO(_NUM)
 
+#define ALT_RPRN MT(MOD_LALT, KC_RPRN)
+#define CTL_LPRN MT(MOD_LCTL, KC_LPRN)
+#define LSFT_LT MT(MOD_LSFT, KC_LT)
 #define CTL_ESC  MT(MOD_LCTL, KC_ESC)
 #define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
 #define CTL_MINS MT(MOD_RCTL, KC_MINUS)
@@ -176,41 +171,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  static uint16_t my_hash_timer;
   switch (keycode) {
-    case CTL_LPRN:
-      if(record->event.pressed) {
-        my_hash_timer = timer_read();
-        register_code(KC_LCTL); // Change the key to be held here
-      } else {
-        unregister_code(KC_LCTL); // Change the key that was held here, too!
-        if (timer_elapsed(my_hash_timer) < TAPPING_TERM) {
-          SEND_STRING("("); // Change the character(s) to be sent on tap here
-        }
-      }
-      return false;
-    case ALT_RPRN:
-      if(record->event.pressed) {
-        my_hash_timer = timer_read();
-        register_code(KC_LALT); // Change the key to be held here
-      } else {
-        unregister_code(KC_LALT); // Change the key that was held here, too!
-        if (timer_elapsed(my_hash_timer) < TAPPING_TERM) {
-          SEND_STRING(")"); // Change the character(s) to be sent on tap here
-        }
-      }
-      return false;
-    case LSFT_LT:
-      if(record->event.pressed) {
-        my_hash_timer = timer_read();
-        register_code(KC_LSFT); // Change the key to be held here
-      } else {
-        unregister_code(KC_LSFT); // Change the key that was held here, too!
-        if (timer_elapsed(my_hash_timer) < TAPPING_TERM) {
-          SEND_STRING("<"); // Change the character(s) to be sent on tap here
-        }
-      }
-      return false;
+  case ALT_RPRN:
+  case CTL_LPRN:
+  case LSFT_LT:
+    if (record->event.pressed && record->tap.count > 0) {
+      register_code(KC_LSFT);
+    } else {
+      unregister_code(KC_LSFT);
+    }
+    return true;
   }
   return true; // We didn't handle other keypresses
 }
