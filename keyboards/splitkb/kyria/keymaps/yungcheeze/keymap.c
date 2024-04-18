@@ -74,6 +74,7 @@ enum layers {
 #define WIN_CAPS MT(MOD_LGUI, KC_CAPS)
 #define WIN_ENT MT(MOD_LGUI, KC_ENT)
 #define WIN_TAB MT(MOD_LGUI, KC_TAB)
+#define KC_DOL LSFT(KC_4)
 // Note: LAlt/Enter (ALT_ENT) is not the same thing as the keyboard shortcut Alt+Enter.
 // The notation `mod/tap` denotes a key that activates the modifier `mod` when held down, and
 // produces the key `tap` when tapped (i.e. pressed and released).
@@ -123,9 +124,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   *                        `----------------------------------'  `----------------------------------'
   */
      [_NAV] = LAYOUT(
-       _______, _______, _______, _______, _______, _______,                                     _______, KC_PGDN, KC_PGUP, _______, _______, _______,
+       _______, _______, _______, _______, _______, _______,                                     _______, KC_PGUP, KC_HOME, _______, _______, _______,
        _______, _______, _______, _______, _______, _______,                                     KC_LEFT, CTL_DOWN, ALT_UP, LSFT_RGHT, _______, _______,
-       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_END, KC_HOME, _______, _______, _______,
+       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_PGDN, KC_END, _______, _______, _______,
                                   _______, _______, _______, _______, _______, _______, _______, KC_TAB, _______, _______
      ),
 
