@@ -20,12 +20,14 @@ enum layers {
     _WORKMAN,
     _NAV,
     _NUM,
+    _FN,
 };
 
 // Aliases for readability
 #define QWERTY   DF(_QWERTY)
 #define WORKMAN   DF(_WORKMAN)
 #define NUM MO(_NUM)
+#define FN MO(_FN)
 
 #define ALT_RPRN MT(MOD_LALT, KC_RPRN)
 #define CTL_LPRN MT(MOD_LCTL, KC_LPRN)
@@ -49,6 +51,8 @@ enum layers {
 #define NAV_G LT(_NAV, KC_G)
 #define NAV_V LT(_NAV, KC_V)
 #define NAV_B LT(_NAV, KC_B)
+#define FN_Y LT(_FN, KC_Y)
+#define FN_H LT(_FN, KC_H)
 #define TMUX LALT(KC_SEMICOLON)
 #define EMACS LALT(KC_SPACE)
 #define MA_D LALT_T(KC_D)
@@ -92,14 +96,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
     [_QWERTY] = LAYOUT(
      _______ , KC_Q ,  KC_W   ,  KC_E  ,   KC_R ,   KC_T ,                                         KC_Y   ,  KC_U  ,  KC_I ,   KC_O ,  KC_P , KC_BSPC,
-     KC_TAB  , KC_A ,  LSFT_S ,  MA_D  ,   MC_F , NAV_G  ,                                         KC_H   ,  MC_J  ,  MA_K ,  LSFT_L,KC_SCLN, KC_QUOT,
+     KC_TAB  , KC_A ,  LSFT_S ,  MA_D  ,   MC_F , NAV_G  ,                                         FN_H   ,  MC_J  ,  MA_K ,  LSFT_L,KC_SCLN, KC_QUOT,
      KC_ESC  , KC_Z ,  KC_X   ,  KC_C  ,   KC_V ,  KC_B  , KC_CAPS ,WORKMAN,     _______, KC_CAPS,  KC_N   ,  KC_M  ,KC_COMM, KC_DOT ,KC_SLSH, KC_GRV,
                                 _______,KC_LGUI ,NUM_ENT ,NUM_SPC  , TMUX  ,     TMUX   ,NUM_SPC , NUM_ENT ,KC_LGUI , _______
     ),
 
     [_WORKMAN] = LAYOUT(
      _______ , KC_Q ,  KC_D   ,  KC_R  ,   KC_W ,   KC_B ,                                         KC_J   ,  KC_F  ,  KC_U ,   KC_P ,KC_SCLN, KC_BSPC,
-     KC_TAB  , KC_A ,  LSFT_S   ,  MA_H  ,   MC_T , NAV_G  ,                                         KC_Y   ,  MC_N  ,  MA_E ,  LSFT_O,KC_I   , KC_QUOT,
+     KC_TAB  , KC_A ,  LSFT_S   ,  MA_H  ,   MC_T , NAV_G  ,                                         FN_Y   ,  MC_N  ,  MA_E ,  LSFT_O,KC_I   , KC_QUOT,
      KC_ESC  , KC_Z ,  KC_X   ,  KC_M  ,   KC_C ,  KC_V  , KC_CAPS ,QWERTY ,     _______, KC_CAPS,  KC_K   ,  KC_L  ,KC_COMM, KC_DOT ,KC_SLSH, KC_GRV,
                                 _______,KC_LGUI ,NUM_ENT ,NUM_SPC  , TMUX  ,     TMUX   ,NUM_SPC , NUM_ENT ,KC_LGUI , _______
     ),
@@ -141,12 +145,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   *                        `----------------------------------'  `----------------------------------'
   */
      [_NUM] = LAYOUT(
-       _______ , KC_HASH, KC_1   , KC_2   , KC_3   ,KC_0    ,                                     KC_PIPE, KC_LBRC, KC_RBRC, KC_CIRC, KC_HASH, _______,
-       KC_ASTR , KC_PLUS, SC_4   , MA_5   , MC_6   ,KC_EQL  ,                                    KC_MINUS,CTL_LPRN,ALT_RPRN,LSFT_LT , KC_GT  , KC_AT  ,
-       KC_SLSH, KC_MINUS, KC_7   , KC_8   , KC_9   ,KC_0    , _______, _______, _______, _______, KC_UNDS, KC_LCBR, KC_RCBR, _______, _______, KC_BSLS,
+       _______ , KC_HASH, KC_1   , KC_2   , KC_3   ,KC_0    ,                                     KC_PIPE, KC_LCBR, KC_RCBR, KC_CIRC, KC_HASH, _______,
+       KC_PLUS , KC_ASTR, SC_4   , MA_5   , MC_6   ,KC_EQL  ,                                    KC_MINUS,CTL_LPRN,ALT_RPRN,LSFT_LT , KC_GT  , KC_AT  ,
+       KC_MINUS, KC_SLSH, KC_7   , KC_8   , KC_9   ,KC_DOL  , _______, _______, _______, _______, KC_UNDS, KC_LBRC, KC_RBRC, _______, _______, KC_BSLS,
                                   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
      ),
 
+     [_FN] = LAYOUT(
+       _______ , _______, KC_F1   , KC_F2   , KC_F3   ,KC_F10    ,                                     _______, _______, _______, _______, _______, _______,
+       _______ , _______, KC_F4   , KC_F5   , KC_F6   ,KC_F11  ,                                    _______,_______,_______,_______ , _______  , _______  ,
+       _______, _______ , KC_F7   , KC_F8   , KC_F9   ,KC_F12    , _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+     ),
 
 // /*
 //  * Layer template
@@ -215,6 +225,9 @@ bool oled_task_user(void) {
             case _NUM:
                 oled_write_P(PSTR("NUM\n"), false);
                 break;
+            case _FN:
+                oled_write_P(PSTR("FN\n"), false);
+                break;
             default:
                 oled_write_P(PSTR("Undefined\n"), false);
         }
@@ -251,3 +264,4 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     return false;
 }
 #endif
+
