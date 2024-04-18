@@ -24,4 +24,4 @@
 #    define RGBLIGHT_LIMIT_VAL 150
 #endif
 
-#define TAPPING_TERM 179
+#define TAPPING_TERM 177
