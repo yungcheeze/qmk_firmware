@@ -24,8 +24,8 @@ enum layers {
 };
 
 // Aliases for readability
-#define QWERTY   DF(_QWERTY)
-#define WORKMAN   DF(_WORKMAN)
+#define QWERTY DF(_QWERTY)
+#define WORKMAN DF(_WORKMAN)
 #define NUM MO(_NUM)
 #define FN MO(_FN)
 
@@ -33,10 +33,10 @@ enum layers {
 #define CTL_LPRN MT(MOD_LCTL, KC_LPRN)
 #define LSFT_LT MT(MOD_LSFT, KC_LT)
 #define LSFT_RGHT MT(MOD_LSFT, KC_RGHT)
-#define CTL_ESC  MT(MOD_LCTL, KC_ESC)
+#define CTL_ESC MT(MOD_LCTL, KC_ESC)
 #define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
 #define CTL_MINS MT(MOD_RCTL, KC_MINUS)
-#define ALT_ENT  MT(MOD_LALT, KC_ENT)
+#define ALT_ENT MT(MOD_LALT, KC_ENT)
 #define LSFT_SPC LSFT_T(KC_SPC)
 #define LSFT_ENT MT(MOD_LSFT, KC_ENT)
 #define LSFT_TAB MT(MOD_LSFT, KC_TAB)
