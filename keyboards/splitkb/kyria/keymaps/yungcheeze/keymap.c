@@ -16,8 +16,8 @@
 #include QMK_KEYBOARD_H
 
 enum layers {
-    _QWERTY = 0,
-    _WORKMAN,
+    _WORKMAN = 0,
+    _QWERTY,
     _NAV,
     _NUM,
     _FN,
