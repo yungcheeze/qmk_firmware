@@ -114,7 +114,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_ZEN] = LAYOUT(
      _______ , KC_Q ,  KC_D   ,  KC_R  ,   KC_W ,   KC_B ,                                         KC_J   ,  KC_F  ,  KC_U ,   KC_P ,KC_SCLN, KC_BSPC,
      KC_TAB  , KC_A ,  KC_S   ,  KC_H  ,   KC_T ,  KC_G  ,                                         KC_Y   ,  KC_N  ,  KC_E ,   KC_O ,KC_I   , KC_QUOT,
-     KC_ESC  , KC_Z ,  KC_X   ,  KC_M  ,   KC_C ,  KC_V  , KC_CAPS ,QWERTY ,     _______, KC_CAPS, KC_K   ,  KC_L  ,KC_COMM, KC_DOT ,KC_SLSH, KC_GRV,
+     KC_ESC  , KC_Z ,  KC_X   ,  KC_M  ,   KC_C ,  KC_V  , KC_CAPS ,WORKMAN ,     _______, KC_CAPS, KC_K   ,  KC_L  ,KC_COMM, KC_DOT ,KC_SLSH, KC_GRV,
                                 _______,_______ , KC_SPC , _______ ,_______ ,    _______, _______, KC_ENT  ,_______ , _______
     ),
  /*
