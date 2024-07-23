@@ -17,6 +17,7 @@
 
 enum layers {
     _WORKMAN = 0,
+    _ZEN,
     _QWERTY,
     _NAV,
     _NUM,
@@ -26,6 +27,7 @@ enum layers {
 // Aliases for readability
 #define QWERTY DF(_QWERTY)
 #define WORKMAN DF(_WORKMAN)
+#define ZEN DF(_ZEN)
 #define NUM MO(_NUM)
 #define FN MO(_FN)
 
@@ -105,10 +107,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_WORKMAN] = LAYOUT(
      _______ , KC_Q ,  KC_D   ,  KC_R  ,   KC_W ,   KC_B ,                                         KC_J   ,  KC_F  ,  KC_U ,   KC_P ,KC_SCLN, KC_BSPC,
      KC_TAB  , KC_A ,  LSFT_S   ,  MA_H  ,   MC_T , NAV_G  ,                                         FN_Y   ,  MC_N  ,  MA_E ,  LSFT_O,KC_I   , KC_QUOT,
-     KC_ESC  , KC_Z ,  KC_X   ,  KC_M  ,   KC_C ,  KC_V  , KC_CAPS ,QWERTY ,     _______, KC_CAPS,  KC_K   ,  KC_L  ,KC_COMM, KC_DOT ,KC_SLSH, KC_GRV,
+     KC_ESC  , KC_Z ,  KC_X   ,  KC_M  ,   KC_C ,  KC_V  , KC_CAPS ,ZEN    ,     _______, KC_CAPS,  KC_K   ,  KC_L  ,KC_COMM, KC_DOT ,KC_SLSH, KC_GRV,
                                 _______,KC_LGUI ,NUM_SPC , TMUX    , TMUX  ,     TMUX   , TMUX   , NUM_ENT ,KC_LGUI , _______
     ),
 
+    [_ZEN] = LAYOUT(
+     _______ , KC_Q ,  KC_D   ,  KC_R  ,   KC_W ,   KC_B ,                                         KC_J   ,  KC_F  ,  KC_U ,   KC_P ,KC_SCLN, KC_BSPC,
+     KC_TAB  , KC_A ,  KC_S   ,  KC_H  ,   KC_T ,  KC_G  ,                                         KC_Y   ,  KC_N  ,  KC_E ,   KC_O ,KC_I   , KC_QUOT,
+     KC_ESC  , KC_Z ,  KC_X   ,  KC_M  ,   KC_C ,  KC_V  , KC_CAPS ,QWERTY ,     _______, KC_CAPS, KC_K   ,  KC_L  ,KC_COMM, KC_DOT ,KC_SLSH, KC_GRV,
+                                _______,_______ , KC_SPC , _______ ,_______ ,    _______, _______, KC_ENT  ,_______ , _______
+    ),
  /*
   * Layer template
   *
@@ -220,6 +228,9 @@ bool oled_task_user(void) {
             case _WORKMAN:
                 oled_write_P(PSTR("WORKMAN\n"), false);
                 break;
+            case _ZEN:
+                oled_write_P(PSTR("ZEN\n"), false);
+                break;
             case _NAV:
                 oled_write_P(PSTR("NAV\n"), false);
                 break;
@@ -265,4 +276,3 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     return false;
 }
 #endif
-
