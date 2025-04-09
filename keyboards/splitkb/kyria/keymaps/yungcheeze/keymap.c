@@ -18,14 +18,12 @@
 enum layers {
     _WORKMAN = 0,
     _ZEN,
-    _QWERTY,
     _NAV,
     _NUM,
     _FN,
 };
 
 // Aliases for readability
-#define QWERTY DF(_QWERTY)
 #define WORKMAN DF(_WORKMAN)
 #define ZEN DF(_ZEN)
 #define NUM MO(_NUM)
@@ -97,13 +95,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |      |      | Enter|      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
-    [_QWERTY] = LAYOUT(
-     _______ , KC_Q ,  KC_W   ,  KC_E  ,   KC_R ,   KC_T ,                                         KC_Y   ,  KC_U  ,  KC_I ,   KC_O ,  KC_P , KC_BSPC,
-     KC_TAB  , KC_A ,  LSFT_S ,  MA_D  ,   MC_F , NAV_G  ,                                         FN_H   ,  MC_J  ,  MA_K ,  LSFT_L,KC_SCLN, KC_QUOT,
-     KC_ESC  , KC_Z ,  KC_X   ,  KC_C  ,   KC_V ,  KC_B  , KC_CAPS ,WORKMAN,     _______, KC_CAPS,  KC_N   ,  KC_M  ,KC_COMM, KC_DOT ,KC_SLSH, KC_GRV,
-                                _______,KC_LGUI ,NUM_SPC , TMUX    , TMUX  ,     FN     , TMUX   , NUM_ENT ,KC_LGUI , _______
-    ),
-
     [_WORKMAN] = LAYOUT(
      _______ , KC_Q ,  KC_D   ,  KC_R  ,   KC_W ,   KC_B ,                                         KC_J   ,  KC_F  ,  KC_U ,   KC_P ,KC_SCLN, KC_BSPC,
      KC_TAB  , KC_A ,  LSFT_S   ,  MA_H  ,   MC_T , NAV_G  ,                                         FN_Y   ,  MC_N  ,  MA_E ,  LSFT_O,KC_I   , KC_QUOT,
@@ -222,9 +213,6 @@ bool oled_task_user(void) {
         // Host Keyboard Layer Status
         oled_write_P(PSTR("Layer: "), false);
         switch (get_highest_layer(layer_state|default_layer_state)) {
-            case _QWERTY:
-                oled_write_P(PSTR("QWERTY\n"), false);
-                break;
             case _WORKMAN:
                 oled_write_P(PSTR("WORKMAN\n"), false);
                 break;
