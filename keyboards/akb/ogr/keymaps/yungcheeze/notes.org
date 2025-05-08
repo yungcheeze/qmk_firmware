@@ -1,0 +1,13 @@
+* Keeb Issues
+- my fingers roll from t to h resulting in Alt-H. th is a very popular
+  bigram. Find a way to disable rolling
+  - just that key (for now)
+  - experiment with all ctrl alt mod taps eventually
+- add layout for chill typing
+  - no mod tap
+  - space on both sides?
+  - no vim
+  - zen mode
+  - bye bye QWERTY
+  - after work task
+  - maybe reinstall workrave???
